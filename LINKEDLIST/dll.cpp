@@ -138,12 +138,72 @@ void deleteNodeOfDLL(Node* temp){
     return ;
 }
 
+// Insertion of newNode before oldNode>>
+Node* insertBeforeHead(Node* head, int val){
+    Node* newNode = new Node(val, head, nullptr);
+
+    head->back = newNode;
+    return newNode;
+}
+
+Node* insertBeforeTail(Node* head, int val){
+
+    if(head->next==NULL){
+        return insertBeforeHead(head,val);
+    }
+
+    Node* tail = head;
+    while(tail->next!=NULL)
+    {
+       tail = tail->next;
+    }
+
+    Node* prev = tail->back;
+    Node* newNode = new Node(val, tail, prev);
+    prev->next = newNode;
+    tail->back = newNode;
+    return head;
+}
+
+Node* insertBeforeKthEl(Node* head , int k, int val){
+    
+    if(k==1){
+       return insertBeforeHead(head,val);
+    } 
+    Node* temp = head;
+    int cnt = 0;
+    while(temp!=NULL){
+       cnt ++;
+       if(cnt == k) break;
+       temp = temp->next;
+    }
+
+    Node* prev = temp->back;
+    Node* newNode = new Node(val,temp,prev);
+    temp->back = newNode;
+    prev->next = newNode;
+    return head;
+}
+
+void insertBeforeNode(Node* node, int val){
+    Node* prev = node->back;
+    Node* newNode = new Node(val, node, prev);
+
+    prev->next = newNode; 
+    node->back = newNode;
+    // return;
+}
+
 int main(){
    vector<int> arr = {21,11,3,12,5};
     Node* head = convertArrToDLL(arr);
+    insertBeforeNode(head->next, 100);
+    // head = insertBeforeKthEl(head, 2,10);
+    // print(head);
+
     // head = deleteKelOfDLL(head , 1);
-    deleteNodeOfDLL(head->next);
-    print(head);
+    // deleteNodeOfDLL(head->next);
+    // print(head);
     // head = deleteHeadOfDLL(head);
     // print(head);
     // head = deleteTailOfDLL(head);
